@@ -1,0 +1,130 @@
+---
+title: "Population Genetics: Matthew B. Hamilton"
+output: html_document
+---
+<br>
+
+Chapter 3: Genetic Drift and Effective Population Size
+======================================================
+<br>
+<br>
+Under a **Wright-Fisher Model** there are a few assumptions of genetic drift, these are:
+
+1.  The direction of change in allele frequency is random.
+2.  The magnitude of change is inversely proportional to population size.
+3.  If there is no other process acting on allele frequncy then fixation/loss is the equilibrium state.
+4.  Genetic drift changes allele frequencies and therefore genotype frequencies.
+5.  The probability of fixation of an allele through drift is its frequency.
+<br>
+<br>
+
+***Modelling Genetic Drift: The Binomial distribution***
+
+The binomial formula describes the probability distribution of $i$ successes in $N$ trails, where the probability of success is $p$. This is quite like sampling alleles from a population. Consider a population of *A* and *a* alleles. For any given trial (or sample) the probability of sampling an *A* allele is the frequency of the *A* allele. But what if we took 10 samples, what is the probability of getting 6, or 7 *A* alleles? This can be described by the binomial probability distribution and is useful for describing the magnitidue af allele frequency changes expected under a Wright-Fisher model of drift.
+
+$$P_{(i=A)}=\binom{2N}{i}p^{i}q^{2N-i}$$ where $$\binom{2N}{i} = \frac{(2N)!}{i!(2N-i)!}$$
+
+$\binom{2N}{i}$ is pronounced "$2N$ draw $i$ and represents the probabiltity of the number of successes, $i$, given $2N$ trials. 
+
+So what is the probability of drawing 7 A from in 10 trials, given that $p$ = 0.5?
+
+$\binom{2N}{i}$ enumerates all the possible ways to draw 7 A from ten trials, and so we need this number first.
+
+$$\binom{10}{7}=\frac{(10)!}{7!(10-7)!} = \frac{`r factorial(10) `}{`r factorial(7) * factorial((10)-7)`} = `r factorial(10) / (factorial(7) * factorial((10)-7))`$$
+
+$2N$ actually refers to the number of draws you are making, so if you make 10 draws it is written as $\binom{10}{2}$ for example. The notation here is $2N$ because in a **Wright-Fisher** model of drift you are usually drawing two alleles from each individual (static pop size), thus you make twice as many draws as there are individuals, hence $2N$. 
+
+Adding this into the equation we get:
+
+$$P_{(i=A)}=`r factorial(10) / (factorial(7) * factorial((10)-7))` \times p^{i}q^{2N-i} = `r factorial(10) / (factorial(7) * factorial((10)-7))` \times 0.5^{7}0.5^{13}= `r factorial(10) / (factorial(7) * factorial((10)-7)) * 0.5^7 * 0.5^3` $$
+
+double check the logic is working by matching up the numbers to the example in the book $\binom{4}{2}$:
+
+$$P_{(i=A)}=`r factorial(4) / (factorial(2) * factorial((4)-2))` \times p^{i}q^{2N-i} = `r factorial(4) / (factorial(2) * factorial((4)-2))` \times 0.5^{2}0.5^{2}= `r factorial(4) / (factorial(2) * factorial((4)-2)) * 0.5^2 * 0.5^2` $$
+
+Yes, it works!! 
+
+Now plot the probabiltiy denstiy for samples with $N$ of 10 draws, and number of success ranging from $0 .. N$, with $p = 0.5$.
+
+```{r}
+
+#set up the draw sizes
+draws<-1000
+p<-0.5
+range<-1:draws
+probs<-NULL
+for ( i in range ) {
+  #also try it with rbinom
+  prob<-dbinom(x=i, size=draws, prob=p)
+  probs<-c(probs,prob)
+}#for
+plot(1:length(probs),probs, type = "n", xlab="number of successes", ylab="probability", main=paste("prbability density of success at p = 0.5, trials = ", draws))
+lines(1:length(probs),probs, lwd=3, col = "red")
+```
+
+The above calculations give the chance of observing x number of success in N trials. Importantly, we can see that the odds of extreme changes in allele frequency (i.e. an unusually large number of success of failures is reduced with increased number of trails, i.e. icreased popluation size). The below plot contains fewer trials than the one above, and you can see the chance of getting a "wild" number of draws increases.
+
+```{r,echo=FALSE}
+
+#set up the draw sizes
+draws<-20
+p<-0.5
+range<-1:draws
+probs<-NULL
+for ( i in range ) {
+  #also try it with rbinom
+  prob<-dbinom(x=i, size=draws, prob=p)
+  probs<-c(probs,prob)
+}#for
+plot(1:length(probs),probs, type = "n", xlab="number of successes", ylab="probability", main=paste("prbability density of success at p = 0.5, trials = ", draws))
+lines(1:length(probs),probs, lwd=3, col = "red")
+```
+
+But how variable should allele frequency changes be under genetic drift. The varience of a **Bernoulli** or **binomial** random variable is:
+
+* $$\sigma^{2}=pq$$
+
+The maxium variability will occur when $p=q=\frac{1}{2}$
+
+The Standard deviation of $\sigma^{2}=\sqrt{pq}$.
+
+and the Standard error is:
+
+* $$SE=\sqrt{\frac{pq}{2N}}$$
+
+Thus the variability of allele changes decrease as a population approaches fixation, this is because $pq$ approaches zero (one of the allele frequencies is almost zero, so x times a number near zero is small, thus the variace approaches 0 too).
+
+```{r, echo=FALSE}
+
+#set up the draw sizes
+draws<-20
+p<-0.95
+range<-1:draws
+probs<-NULL
+for ( i in range ) {
+  #also try it with rbinom
+  prob<-dbinom(x=i, size=draws, prob=p)
+  probs<-c(probs,prob)
+}#for
+plot(1:length(probs),probs, type = "n", xlab="number of successes", ylab="probability", main=paste("prbability density of success at p =", p,", trials = ", draws))
+lines(1:length(probs),probs, lwd=3, col = "red")
+```
+
+Also the  SE in allele frequency changes also reduces in population where alleles approach fixation/loss. For example, see the plot below:
+
+```{r, echo = FALSE}
+
+P<-seq(0,1,0.01)
+N<-10
+SEs<-NULL
+for ( p in P ) {
+  SEs<-c(SEs, sqrt((p*(1-p))/(2*N)))
+}#for
+
+plot(P,SEs, main="SE and allele frequency", xlab="Allele frequency", 
+     ylab="SE of the expected allele frequency", type= "n")
+lines(P,SEs,lwd=3, col="darkgreen")
+
+```
+
+***\bigg{Markov chain models}***
