@@ -24,7 +24,7 @@ The binomial formula describes the probability distribution of $i$ successes in 
 
 $$P_{(i=A)}=\binom{2N}{i}p^{i}q^{2N-i}$$ where $$\binom{2N}{i} = \frac{(2N)!}{i!(2N-i)!}$$
 
-$\binom{2N}{i}$ is pronounced "$2N$ draw $i$ and represents the probabiltity of the number of successes, $i$, given $2N$ trials. 
+$\binom{2N}{i}$ is pronounced "$2N$ draw $i$" and represents the probabiltity of the number of successes, $i$, given $2N$ trials. 
 
 So what is the probability of drawing 7 A from in 10 trials, given that $p$ = 0.5?
 
@@ -127,4 +127,51 @@ lines(P,SEs,lwd=3, col="darkgreen")
 
 ```
 
-***\bigg{Markov chain models}***
+***Markov chain models***
+
+Instead of looking at one population, like we have done before, it can be useful to look and numerous identical populations, to find a little bit about how drift works *on average*.
+
+For example for a given allele we can calculate the **transition probability** of one state to another (i.e. from one frequency to another) using the binomial formula:
+
+* $$P_{(i \rightarrow j)}=\binom{2N}{j}p^{j}q^{2N-j}$$
+
+where $i$ is the initial number of number of the allele and $j$ is the new number of alleles, after the proposed transition.
+
+By assumin an infinite number of popultaions one can start of with founding populations and then, generation by generation, modify the average frequncy of each allele across all populations. For example, imagine a infinate number of populations, each of one individual with *A* and *a* alleles (therefore and *Aa* heterozygote), each allele frequencies of $p=q=\frac{1}{2}$. After sampling to form another generation, with a single diploid idividual there are only three outcomes:
+
+* number of *A* alleles = 0 (lost).
+* number of *A* alleles = 1 (Heterozygote).
+* or number of *A* alleles = 2 (Fixed).
+
+You can use the binomial equation to figure out the probability of each transition (0,1,2) 
+
+For example the liklihood of drawing 2 A alleles is:
+
+$$P_{(1 \rightarrow 2)}=\binom{2}{2}p^{2}q^{0} = `r dbinom(x=2,size=2,p=0.5)`$$
+
+given that each population will now have two *A* alleles at probability 0.25 so you can modify the frequency of populations in state *i* with the transition probability of moving to state $j$ such that if there are 100 ($i$) population with one *A* allele, and one *a* allele, 25 will now be fixed for *A*. 
+
+Using fancy matrix algebra there is you can culculate that the rate at which genetic variation is lost for ma collection f populations is:
+
+This means that the frequency of alleles in a given generation is only effected by the allele frequency in the current generation, this is known as the **Markov property**.
+
+* $$1-\frac{1}{2N}$$
+
+This means that genetic drift reduces genetic variaiton and a amount equal the inverse of twice the population size! Try to graph this according to population size.
+
+```{r, echo = FALSE}
+
+Ns<-seq(10,10000,10)
+decay<-NULL
+for ( N in Ns ) {
+  #calculate the value of decay 1-(1/(2*N))
+  decay<-c(decay,1/(2*N))
+}#for
+
+plot(log(Ns),decay,type="n",main="loss due to drift", xlab="log(N)", ylab = "rate of decay")
+lines(log(Ns),decay,lwd=3)
+```
+
+This figure shows exactly how population size effects the rate at which genetic diversity is lost, a key insight from the Hamilton chapter.
+
+***The Diffusion approximation of genetic drift***
