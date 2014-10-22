@@ -174,4 +174,18 @@ lines(log(Ns),decay,lwd=3)
 
 This figure shows exactly how population size effects the rate at which genetic diversity is lost, a key insight from the Hamilton chapter.
 
-***The Diffusion approximation of genetic drift***
+***Effective Population Size***
+
+* **consensus populations** size $\longrightarrow$ the total **head count** of the population.
+
+* The **effective population size** $N_{e}\longrightarrow$ is approxiamtely the number of individuals that **contribute gametes** to the next generation.
+
+An example of why $N_{e}$ might be lower that the consensus pop size is demonstrated by fluctuating population size over time. For example, imagine a population of 100, then 10, then 100 indoividuals over three generations (a genetic bottleneck). The arithmetic mean is 70, but a better refelction of the effect of drift on this population would be to use the *harmonic mean*.
+
+* **Founder Effect** is the establishment of a popualtion by a few individuals, the population is therefor subject to the excess drift/sampling error of small populations.
+
+Also mating behaviours also impact $N_{e}$, when males compete for females for example, and typically few males contribute gametes to the next generation, thus $N_{e}$ is lower than the consensus head count. **The Breeding Sex Ratio** can alter $N_{e}$ as such:
+
+* $$N_{e}=4\frac{N_{m}N_{f}}{N_{m}+N_{f}}$$
+
+where $N_{m}$ and $N_{f}$ are the number of breeding males and females respectively.
