@@ -180,12 +180,74 @@ This figure shows exactly how population size effects the rate at which genetic 
 
 * The **effective population size** $N_{e}\longrightarrow$ is approxiamtely the number of individuals that **contribute gametes** to the next generation.
 
-An example of why $N_{e}$ might be lower that the consensus pop size is demonstrated by fluctuating population size over time. For example, imagine a population of 100, then 10, then 100 indoividuals over three generations (a genetic bottleneck). The arithmetic mean is 70, but a better refelction of the effect of drift on this population would be to use the *harmonic mean*.
+An example of why $N_{e}$ might be lower that the consensus pop size is demonstrated by fluctuating population size over time. For example, imagine a population of 100, then 10, then 100 indoividuals over three generations (a genetic bottleneck). The arithmetic mean is 70, but a better refelction of the effect of drift on this population would be to use the *harmonic mean* which is 0.25.
 
 * **Founder Effect** is the establishment of a popualtion by a few individuals, the population is therefor subject to the excess drift/sampling error of small populations.
 
-Also mating behaviours also impact $N_{e}$, when males compete for females for example, and typically few males contribute gametes to the next generation, thus $N_{e}$ is lower than the consensus head count. **The Breeding Sex Ratio** can alter $N_{e}$ as such:
+Also mating behaviours also impact $N_{e}$, when males compete for females for example, and typically few males contribute gametes to the next generation, thus $N_{e}$ is lower than the consensus head count. Assuming all other conditions of a Wright-Fisher population are met then **The Breeding Sex Ratio** can alter $N_{e}$ as such:
 
 * $$N_{e}=4\frac{N_{m}N_{f}}{N_{m}+N_{f}}$$
 
 where $N_{m}$ and $N_{f}$ are the number of breeding males and females respectively.
+
+For example in Elephant seals 21 males successfully mated (although 71 were observed, but didn't mate) with 550 females. A highly skewed breeding ratio. The impact on $N_{e}$ is really quite profound:
+
+$$N_{e}=4\frac{(21)(550)}{21+550} = `r 4* ( ((21)*(550))/(21+550))`$$
+
+This essentially means that a consensus population of 625 individuals has an $N_{e}$ euivalent of an ideal Wright-Fisher population of 40 males and 40 females when breeding ration is 1:1....
+
+***Paralelisms between Genetic Drift and Inbreeding***
+
+Mating in small pops can be thought of as a form of inbreeding. For example, in a infinite populaion you will not breed with your relatives, but as pop size decreases then you have a higher change of randonly picking your relative and the amount of inbreeding will increase. Genetic Drift and inbreeding ahve some commonalities, for example:
+<br>
+<br>
+
+1. Both have a greater impact in smaller populations and..<br>
+2. Both lead to an increase in Homozygosity.
+
+Inbreeding can be examined in terms of its effects on the **Fixation Index** $F_{t}$. 
+
+* $$F_{t} = \frac{1}{2N_{e}} + \bigg(1-\frac{1}{2N_{e}}\bigg)F_{t-1}$$
+
+The first term is the chance of picking identical aleles by descent (autozygostity). The second term takes the probability of picking a non autozygous allele $\big(1-\frac{1}{2N_{e}}\big)$, that is actually autozygous due to inbreeding in the previous generation $F_{t-1}$.
+
+After some re-arrangement the Heterozygosity of generation $t$ is:
+
+* $$H_{t}=\bigg(1-\frac{1}{2N_{e}}\bigg)^{t}H_{0}$$.
+
+Where $H_{0}$ is the initial heterozygosity and $H_{t}$ is the heterozygosity in the new generation.
+
+```{r, echo = FALSE}
+
+Nes<-c(10,50,100,200)
+cols<-c("darkblue","lightblue","yellow","red")
+declineH<-NULL
+gens<-seq(1,50,1)
+
+for ( Ne in Nes ) {
+  Ht<-0.5
+  for ( g in gens ) {
+    H0<-Ht
+    Ht<-(1-(1/(2*Ne)))*H0
+    declineH<-c(declineH,Ht)
+  }#for
+}#for
+
+mat<-matrix(declineH, ncol=4, byrow = FALSE)
+
+plot(rep(gens,4),mat, type = "n", main="decay of heterozygosity due to inbreeding", xlab= "generation", ylab="Heterozygosity")
+for ( i in 1:dim(mat)[2]) {
+  lines(gens,mat[,i], lwd=3, col=cols[i])
+}#for
+legend("bottomleft",legend=Nes, col = cols, title="population size", pch = 15, bty="n")
+```
+
+
+There is an important distiction between inbreeding and Genetic drift:
+
+* Drift causes decreases in $H$ (heterozygosity) due to the **fixation/loss of alleles**.
+* Inbreeding causes decreases in $H$ due to **changes in genotype frequencies** *not* via loss of alleles.
+
+<br>
+
+***Estimating effective population size***
