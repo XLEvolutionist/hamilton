@@ -251,3 +251,49 @@ There is an important distiction between inbreeding and Genetic drift:
 <br>
 
 ***Estimating effective population size***
+
+Here we will consider three estimates of effective population size:
+
+* **Inbreeding effective population size** $N^{i}_{e}$ which is the the size of an idealised Wright-Fisher population that exhibits the same probabiltiy of two alleles being **identical by decent** (IBD) as the actual **REAL** population.
+
+* **Varience effective population size** $N^{i}_{v}$, which is the size of an idealised Wright-Fisher population that has the same sampling vareince in allele frequency as the **REAL** population.
+
+For **Inbreeding effective population size**..
+
+In an ideal population the probability of sampling an two alleles the are IBD is equal to $\frac{1}{2N^{i}_{e}}$, so...
+
+$$ P(IBD)=\frac{1}{2N^{i}_{e}}$$
+
+After re-arranging for $N^{i}_{e}$ we get..
+
+$$N^{i}_{e}=\frac{1}{2p(IBD)}$$
+
+THe second equation shows us the probability of IBD is dependent on the population size (remember IBD is a measure of inbreeding and is not the same as identity by state). Thus the lielyhood of draeing two alleles which are IBD is greater in small populations. Thus the $N_{e}$ has been defined by the expected rate of inbreeding, it is the **Inbreeding effective population size**.
+
+For **Varience effective population size**
+
+This estimate makes use of the variation in allele frequencies in multiple replicate populations. For example the varience in allele frequency changes in a group of replicate populations can be defined as:
+
+$$Varience(\Delta{p})=\frac{p_{t-1}q_{t-1}}{2N^{i}_{v}}$$
+
+Where $p$ and $q$ are allele frequencies at a diallelic locus. The equation can be re-arranged to give $N^{i}_{v}$.
+
+$$N^{i}_{v}=\frac{pq}{2\times variance(\Delta{p})}$$
+
+This is similar to the above, where we have defined N^{i}_{v} based on the expected vareicne in allele frequency changes for a goven population.
+
+These effective population sizes estimates are **NOT** always equivalent as they measure different aspects of the population. 
+
+For **Breeding Effective Population Size**
+
+The above to parameter estimates assume descrete population entities, but what if a population is spread *continously* over a large geographical area and dispersal of individuals and/or gametes is limited (in a population of plants for example). In this case population size can be defined as the average dispersal and mating patterns. This approach is called the **Breeding Effective Population Size**.
+
+In effect individuals in this population are essentially **isolated by distance** and dispersal can follow a normal distribution. For example
+
+```{r, echo = FALSE}
+#generate numbers according to the normal distribution
+values<-rnorm(n=1000,mean=0, sd = 3)
+#plot denstiy
+hist(abs(values), xlab="distance", col = "cyan", main= "gamete dispersal by distance")
+
+```
