@@ -295,5 +295,107 @@ In effect individuals in this population are essentially **isolated by distance*
 values<-rnorm(n=1000,mean=0, sd = 3)
 #plot denstiy
 hist(abs(values), xlab="distance", col = "cyan", main= "gamete dispersal by distance")
-
 ```
+
+This can alse be visualized in 2-Dimensions..
+
+```{r, echo = FALSE}
+# lets first simulate a bivariate normal sample
+library(MASS)
+Sigma <- matrix(c(10,3,3,2),2,2)
+bivn <- mvrnorm(1000, mu = c(0, 0), Sigma )
+
+# now we do a kernel density estimate
+bivn.kde <- kde2d(bivn[,1], bivn[,2], n = 100)
+
+# now plot your results
+#contour(bivn.kde)
+#image(bivn.kde)
+persp(bivn.kde, phi = 45, theta = 90)
+```
+
+
+In this case $N^{b}_{e}$ can be defined as:
+
+* $$N^{b}_{e}=\pi\big(2\sqrt{dispersal variance}\big)^{2}d$$
+
+Which can then be simplified to:
+
+* $$N^{b}_{e}=4\pi\big(dispersal\ SD\big)d$$
+
+where $d$ is the density of individuals. The area described by the above equation is called the **genetic heighbourhood**.
+Multiplying the genetic neighbourhood by the density of indivudals gives you the **breeding effective population size**.
+
+**Important terms**
+
+* **Breeding effective population size** $N^{b}_{e}$ = the number of individuals found in a genetic neighbourhood, which is defined as the vareince in gamete dispersal.
+
+* **Deme** The largest areas or collection of individuals where mating is random.
+
+* **Genetic neighbourhood** An areas or sub-unit of a population within whxih mating is random.
+
+* **Isolation by distance** The decrease in the probability of gamete union due to physical distance.
+
+***Effective population size of different genomes***
+
+The $N_{e}$ of plastid and mitochondrial genomes is $1/4$ of that of the nuclear genome. This is because of two independent reasons:
+
+1. There is only a haploid copy per organelle, and organelles are inherited singularly, give or take.
+
+2. They are only inherited through one line, usually the maternal line.
+
+Each of there reduces $N_{e}$ by $1/2$.
+
+***Gene genealogies and the coalescent model***
+
+Some important terms:
+
+1. **Coalescence** or **Coalescent event**: The point in time where a pair of lienages of genealogies trace back to a single common lineage.
+
+2. **Genealogy** The record of ancestor-descendnet relationships for a family or locus.
+
+3. **Waiting time** The *mean* expected waiting time back in the past until a single coalescent even in a sample of lineages.
+
+Under an idealised Wright-Fisher population the probability that two lineages coalescence is:
+
+$$ \frac{1}{2N}$$
+
+and the probability that they do not is:
+
+$$ 1-\frac{1}{2N}$$
+
+When the coalescent event occurs the number of lineages is reduced by one.
+
+The coalescence displays the Markov property in that the outcome in the next generation depends only on the situation in the current generation. This means that the basic probabilities of coalescence can be caluculated over an arbitrary number of time-points (generations).
+
+This sueful equation demostrates the probability of coalscence in $t$ generations is:
+
+$$\bigg(1-\frac{1}{2N}\bigg)^{t-1} \frac{1}{2N}$$
+
+for example in a population of N=10 the chance that two radom alleles will coalesce in four generations is the liklighood they **DO NOT** coalesce in the first three generation (going backwars of course) $\bigg(1-\frac{1}{2N}\bigg)^{3}$ but **DO** coalesce in the final fourth generation $\frac{1}{2N}$.
+
+The *cumulative* probability of two random alleles coalescing in t generations is estimated by the exponential function:
+
+$$P(T_{C}\leq t) = 1-e^{-\frac{1}{2N}t}$$
+
+```{r, echo = FALSE}
+#use the exponential distribution to estimate probability of coalescence at time t
+gens<-seq(1,20,1)
+
+probs<-NULL
+probsCum<-NULL
+N<-2
+for ( t in gens ) {
+  #p<-dexp(gens,rate=-(1/(2*N))*i)
+  pC<- 1-exp(- (1/(2*N))*t)
+  probsCum<-c(probsCum,pC)
+  p<-((1-(1/(2*N)))^(t-1))*(1/(2*N))
+  probs<-c(probs,p)
+}#for
+cols<-c("red","green")
+plot(probs, type="n", xlab="generation(t)", ylab="probability", ylim=c(0,1), xlim=c(1,20))
+lines(probs, col = "red" , lwd = 3)
+lines(probsCum, col = "green", lwd = 3)
+legend("right", col = c("red","green"), pch=15, legend=c("at generation t","cumulative"), bty="n")
+```
+
