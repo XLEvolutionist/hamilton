@@ -399,3 +399,38 @@ lines(probsCum, col = "green", lwd = 3)
 legend("right", col = c("red","green"), pch=15, legend=c("at generation t","cumulative"), bty="n")
 ```
 
+Importantly, the average time for $k$ lineages to coalesce in a population of $2N$ indivduals is:
+
+$$\frac{2N}{\frac{k(k-1)}{2}}$$
+
+It is important to note that this is the time for **any two** of these $k$ lineages to coalesce.
+
+The basic natire of the coalesence is the same for all poplutations no matter what the size. Population size just scales the time along which coalescence occurs. 
+
+***Height of the coalescent tree***
+
+The time from the present to the point in the past where all $k$ lineages have coalescend and found their MRCA. This is hiehgt is simplay the sum of the **waiting times** for all coalescent events in the tree. 
+
+$$E(H_{k}) = 2\bigg(1-\frac{1}{k}\bigg)$$.
+
+***Coalescent genalogies abd population bottle necks***
+
+Just like the effects of Genetic drift coalescent probabilities in populations can be calculated using the harmonic mean of $N_{e}$ is the population fluctates in size.
+
+For example the harmonic mean of a population with equal time at size 100-10-100 is ~25 and thge probability of two alleles **NOT** coalescing over 3 generations:
+
+$$P_{NC}\approx e^{-\frac{3}{2(25)}}$$.
+
+Thus the chance of coalescing over the three generations is 1-P_{NC}
+
+***Coalescent genealogies in growing and shrinking populations***
+
+Working backwards in time, if a population is shrinking, then the probability of a coalescent is increasing as $N$ is shrinking and the probability of a coalescent event is $\frac{1}{2N}$.
+
+The result is that expanding population tends to be the reverse of stable population in that the longest perionds between coalescent events occur towards the tips of the tree where $N$ is larger (thus prob of coalescent is lower).
+
+Take a look at these picutres to get a flavor of what I mean:
+
+![Coalescent tree and popluation growth 1](/Users/simonrenny-byfield/GitHubRepos/hamilton/journal.pcbi.1002947.g001.png)
+![Coalescent tree and popluation growth 2](/Users/simonrenny-byfield/GitHubRepos/hamilton/e_coalescenttheoryillustration.jpg)
+
