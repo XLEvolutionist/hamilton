@@ -5,13 +5,50 @@ date: "November 3, 2014"
 output: html_document
 ---
 
-This document constitutes my personal notes based on "Population Genetics" by Matthew. B. Hamilton First Ed. 2009. They can be used, modified and distrubted freely under the terms of the GNU, provided the author of the document (myself) and the author of the book on which the notes are based (Matthew B. Hamilton), are credited.
-
+This document constitutes my personal notes based on "Population Genetics" by Matthew. B. Hamilton First Ed. 2009. They can be used, modified and distrubted freely under the terms of the GNU, provided the author of the document (myself) and the author of the book on which the notes are based (Matthew B. Hamilton), are credited.  
+    
+<br>    
 
 ***Genetic Populations***
 
 * **Panmixia** The notion that a population is a single colection of individauls where mating is random and movement of individuals is uniform $\longrightarrow$ this is rarely true for natural populations.
 
-Several things can cuase devaition from *Panmixis*. Movement of individuals is often not random and the chance of two individuals mating often depends on their position in the population $\longrightarrow$ this is known as **Population Structure**. This harks back the the earlier chapter where Hamilton discusses **Isolation by distance**.
+Several things can cause devaition from *Panmixis*. Movement of individuals is often not random and the chance of two individuals mating often depends on their position in the population $\longrightarrow$ this is known as **Population Structure**. This harks back the the earlier chapter where Hamilton discusses **Isolation by distance**.
 
 But what are the impacts of popultion structure on local allele and genetype frequencies?
+
+Isolation can be thought of as a form of **Inbreeding** and results in a reduction in effective population size.
+
+Hamilton points of the difference between *migration* and *gene flow*. Migration is simply the movement of individuals from one place to another, which may or may not result in gene flow. Gene flow is the movement of alleles between populations. Also gene flow can occur without any migration (in the case of long distance pollen dispersal for example).
+
+<br>  
+
+***Direct measures of gene flow***
+
+You can, using genetic markers, identify the parents of a set pf progeny, and therefore reconstruct the matings that occured between the parents.
+
+Hamilton discusses parentage tests (usually the female parent is known ad you are estimating the likely father). Typically genotyping at highly variable micro-satellite markers gives a good indication of the likely paternal line. A caveat is that you need to know the likely hood of having the same haplotype by chance. For example, the odds of having the same allele at a given locus is the odds of the progeny being homozygous or heterozygote for that allele at the given locus.
+
+$$P(random\space match) = p^{2}_{i} + 2p_{i}(1-p_{i})$$
+
+**under the assumption of random mating and panmixia**. Assuming that all loci are indepednant you can multiply the probabilities across all loci considered to give you the chance of a random match.
+
+$$\prod^{loci}_{i=1} (p^{2}_{i} + 2p_{i}(1-p_{i}))$$
+
+Random matches become less likely as scored allele are lower in frequency **AND** the number of loci under consideration increases.
+
+Additionally the **Exclusion probability** is simply 1 minus the probabiltiy of matching by chance:
+
+$$p(exclusion) = 1 - P(random\space match)$$
+
+For a sample of $n$ individuals the total probability of exclusion (in this case excluding ALL the potential parents) is 
+
+$$P(exclusion\space for\space n\space individuals) = (1-P(random\space match))^{n}$$
+
+Thus the chance of exclusion decreases as you sample more individuals. This is the same thing as saying the probability of matching someone at random increases as you sample more individuals. From this we can calculate the chances that a random match *does* occur.
+
+$$ = 1-P(exclusion\space for\space n\space individuals)$$
+
+or
+
+$$ 1 - (1-P(random\space match))^{n}$$ 
