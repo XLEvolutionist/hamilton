@@ -1,0 +1,17 @@
+---
+title: 'Chapter 4: Population Structure and Gene Flow'
+author: "Simon Renny-Byfield"
+date: "November 3, 2014"
+output: html_document
+---
+
+This document constitutes my personal notes based on "Population Genetics" by Matthew. B. Hamilton First Ed. 2009. They can be used, modified and distrubted freely under the terms of the GNU, provided the author of the document (myself) and the author of the book on which the notes are based (Matthew B. Hamilton), are credited.
+
+
+***Genetic Populations***
+
+* **Panmixia** The notion that a population is a single colection of individauls where mating is random and movement of individuals is uniform $\longrightarrow$ this is rarely true for natural populations.
+
+Several things can cuase devaition from *Panmixis*. Movement of individuals is often not random and the chance of two individuals mating often depends on their position in the population $\longrightarrow$ this is known as **Population Structure**. This harks back the the earlier chapter where Hamilton discusses **Isolation by distance**.
+
+But what are the impacts of popultion structure on local allele and genetype frequencies?
