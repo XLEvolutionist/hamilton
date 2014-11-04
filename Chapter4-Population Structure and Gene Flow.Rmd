@@ -53,7 +53,7 @@ or
 
 $$ 1 - (1-P(random\space match))^{n}$$ 
 
-Importantly this probability can be thought of as the likelyhood that the **incorrect parent is assigned afdter the genotype test $\longrightarrow$ this is often refferred to as **cryptic gene flow**. This essentailly boils down to the fact that you cannot assertain the parent of one of the offspring and so the correct genotype has not been samples. It is missing for one reason or another. This could be :
+Importantly this probability can be thought of as the likelyhood that the **incorrect parent is assigned after the genotype test $\longrightarrow$ this is often refferred to as **cryptic gene flow**. This essentailly boils down to the fact that you cannot assertain the parent of one of the offspring and so the correct genotype has not been samples. It is missing for one reason or another. This could be :
 
 1.  The parent may not be present in the sample (i.e. gene flow, death, migration??)
 2.  The gene arises from outsode the bounds of your study plot (off site gene flow).
