@@ -59,3 +59,55 @@ Importantly this probability can be thought of as the likelyhood that the **inco
 2.  The gene arises from outsode the bounds of your study plot (off site gene flow).
 
 The are **estimates** of direct gene flow!!
+
+
+***Fixation indices to measure the pattern of population subdivision***
+
+One can assess population sctructure by taking samples from geographical locations and examining genotype. You can compare the information to what you would expect if the were no population structure.
+
+For example the Fixation index can be expanded to cover deviations from the expected numbers of heterozygotes to descibe:
+
+* 1 devaition due to non-randome mating within a population.
+* 2 devaition due to population structure.
+
+Remember that heterozygosity is $H= 1- F$ (that is 1 minus the homozygosity) and can be related to the fixation index $F$.
+
+It is possible to calculate heterozygosity at three levels of population structure:
+
+[1] $$H_{I}=\frac{1}{n}\sum^{n}_{i=1}\hat{H}_{i}$$
+
+This is the average observed $H$ within each of the $n$ subpopulations.
+
+[2] $$H_{S}=\frac{1}{n}\sum^{n}_{i=1}2p_{i}q_{i}$$
+
+This is the average expected $H$ within each subpopulation, assuming random mating.
+
+[3] $$H_{T}=2\bar{p}\bar{q}$$
+
+This is expected $H$ within of the entire population, assuming random mating where $\bar{p}$ and $\bar{q}$ are the average allele frequencies across all populations.
+
+But what if these sub-populations are different sizes. Say sub-pop1 is twice the size of sub-pop2, the simple avergae is not suitable surely...
+
+**Various measures of fixation index**
+
+| Index        | Meaning           | 
+| ------------- |:-------------:| 
+| $F_{IS}=\frac{H_{S}-\hat{H}_{I}}{H_{S}}$  | The mean difference between obs and HWE exp $H$  within each sub-pop|
+| $F_{ST}=\frac{H_{T}-{H}_{S}}{H_{T}}$      | The reduction in $H$ due to allele fequency divergence between pops      | 
+| $F_{IT}=\frac{H_{T}-{H}_{I}}{H_{T}}$ | The heterozygosity within a sub-pops given non-random mating and divergence between sub-pops      |
+
+When two sub-populations are in complete panmixia (i.e. they are not really sub-populations) $H_{T}$ and $H_{S}$ are identicle and $F_{ST}$ is 0 (i.e. no population sub-division).
+
+Another way to *estiamate* $F_{ST}$ is to measure the varience in allele frequency between populations. The varience amoung $n$ populations can be given as:
+
+* $$var(p)=\frac{1}{n}\sum_{i=1}^{n}(p_{i} - \bar{p})^2$$
+
+Which then leads to:
+
+* $$F_{ST} = \frac{var(p)}{\bar{p}\bar{q}}$$
+
+This is often used to estimate $F_{ST}$ ($\hat{F_{ST}}$) using real genotype data. Importantly, sub-popultions divergence in allele frequenciesdue to drift so it is crucial to calculate $F_{ST}$ over many many loci across the genome. 
+
+##Population sub-division and the Wahlund effect##
+
+

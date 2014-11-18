@@ -90,6 +90,58 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <li>The gene arises from outsode the bounds of your study plot (off site gene flow).</li>
 </ol>
 <p>The are <strong>estimates</strong> of direct gene flow!!</p>
+<p><strong><em>Fixation indices to measure the pattern of population subdivision</em></strong></p>
+<p>One can assess population sctructure by taking samples from geographical locations and examining genotype. You can compare the information to what you would expect if the were no population structure.</p>
+<p>For example the Fixation index can be expanded to cover deviations from the expected numbers of heterozygotes to descibe:</p>
+<ul>
+<li>1 devaition due to non-randome mating within a population.</li>
+<li>2 devaition due to population structure.</li>
+</ul>
+<p>Remember that heterozygosity is <span class="math">\(H= 1- F\)</span> (that is 1 minus the homozygosity) and can be related to the fixation index <span class="math">\(F\)</span>.</p>
+<p>It is possible to calculate heterozygosity at three levels of population structure:</p>
+<p>[1] <span class="math">\[H_{I}=\frac{1}{n}\sum^{n}_{i=1}\hat{H}_{i}\]</span></p>
+<p>This is the average observed <span class="math">\(H\)</span> within each of the <span class="math">\(n\)</span> subpopulations.</p>
+<p>[2] <span class="math">\[H_{S}=\frac{1}{n}\sum^{n}_{i=1}2p_{i}q_{i}\]</span></p>
+<p>This is the average expected <span class="math">\(H\)</span> within each subpopulation, assuming random mating.</p>
+<p>[3] <span class="math">\[H_{T}=2\bar{p}\bar{q}\]</span></p>
+<p>This is expected <span class="math">\(H\)</span> within of the entire population, assuming random mating where <span class="math">\(\bar{p}\)</span> and <span class="math">\(\bar{q}\)</span> are the average allele frequencies across all populations.</p>
+<p>But what if these sub-populations are different sizes. Say sub-pop1 is twice the size of sub-pop2, the simple avergae is not suitable surely…</p>
+<p><strong>Various measures of fixation index</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Index</th>
+<th align="center">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><span class="math">\(F_{IS}=\frac{H_{S}-\hat{H}_{I}}{H_{S}}\)</span></td>
+<td align="center">The mean difference between obs and HWE exp <span class="math">\(H\)</span> within each sub-pop</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math">\(F_{ST}=\frac{H_{T}-{H}_{S}}{H_{T}}\)</span></td>
+<td align="center">The reduction in <span class="math">\(H\)</span> due to allele fequency divergence between pops</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math">\(F_{IT}=\frac{H_{T}-{H}_{I}}{H_{T}}\)</span></td>
+<td align="center">The heterozygosity within a sub-pops given non-random mating and divergence between sub-pops</td>
+</tr>
+</tbody>
+</table>
+<p>When two sub-populations are in complete panmixia (i.e. they are not really sub-populations) <span class="math">\(H_{T}\)</span> and <span class="math">\(H_{S}\)</span> are identicle and <span class="math">\(F_{ST}\)</span> is 0 (i.e. no population sub-division).</p>
+<p>Another way to <em>estiamate</em> <span class="math">\(F_{ST}\)</span> is to measure the varience in allele frequency between populations. The varience amoung <span class="math">\(n\)</span> populations can be given as:</p>
+<ul>
+<li><span class="math">\[var(p)=\frac{1}{n}\sum_{i=1}^{n}(p_{i} - \bar{p})^2\]</span></li>
+</ul>
+<p>Which then leads to:</p>
+<ul>
+<li><span class="math">\[F_{ST} = \frac{var(p)}{\bar{p}\bar{q}}\]</span></li>
+</ul>
+<p>This is often used to estimate <span class="math">\(F_{ST}\)</span> (<span class="math">\(\hat{F_{ST}}\)</span>) using real genotype data. Importantly, sub-popultions divergence in allele frequenciesdue to drift so it is crucial to calculate <span class="math">\(F_{ST}\)</span> over many many loci across the genome.</p>
+<div id="population-sub-division-and-the-wahlund-effect" class="section level2">
+<h2>Population sub-division and the Wahlund effect</h2>
+</div>
 
 
 </div>
